@@ -1,0 +1,1229 @@
+<!--Saved by Quest 5.8.6836.13983-->
+<asl version="580">
+  <include ref="English.aslx" />
+  <include ref="Core.aslx" />
+  <include ref="NpcLib.aslx" />
+  <game name="Lil' Guy">
+    <gameid>f7b5459a-8163-41b4-8b32-fc8234913848</gameid>
+    <version>1.0</version>
+    <firstpublished>2023</firstpublished>
+    <description type="string"></description>
+    <author>Callum Clark, Colette Campbell, and Owen Campbell</author>
+    <feature_advancedwearables />
+    <feature_advancedscripts />
+    <showpanes type="boolean">false</showpanes>
+    <enablehyperlinks />
+    <colourblend type="boolean">false</colourblend>
+    <borderlesscursor />
+    <classiclocation type="boolean">false</classiclocation>
+    <showlocation type="boolean">false</showlocation>
+    <showcommandbar />
+    <customlocationcolour>Black</customlocationcolour>
+    <customlocationtextcolour>White</customlocationtextcolour>
+    <defaultwebfont>Kavivanar</defaultwebfont>
+    <defaultforeground>Pink</defaultforeground>
+    <defaultbackground>#333</defaultbackground>
+    <marginscolour>#333</marginscolour>
+    <attr name="autodescription_youarein_useprefix" type="boolean">false</attr>
+    <attr name="autodescription_youcango_newline" type="boolean">false</attr>
+    <attr name="autodescription_description" type="int">2</attr>
+    <attr name="autodescription_youcansee" type="int">3</attr>
+    <attr name="autodescription_youcango" type="int">0</attr>
+    <feature_devmode />
+    <subtitle>and his adventure to beat an evil wizard</subtitle>
+    <category>Fantasy</category>
+    <feature_lightdark />
+    <showhealth type="boolean">false</showhealth>
+    <autodescription_youarein_newline />
+    <feature_asktell />
+    <showtitle />
+    <defaultlinkforeground>AntiqueWhite</defaultlinkforeground>
+    <menufont>Georgia, serif</menufont>
+    <gridmap type="boolean">false</gridmap>
+    <attr name="feature_pictureframe" type="boolean">false</attr>
+    <turnoffcompass type="boolean">false</turnoffcompass>
+    <turnoffinventory type="boolean">false</turnoffinventory>
+    <turnoffplacesandobjects type="boolean">false</turnoffplacesandobjects>
+    <start type="script">
+      JS.eval ("getCSSRule('a.cmdlink').style.color='AntiqueWhite'")
+    </start>
+    <unresolvedcommandhandler type="script">
+      msg ("Sorry, I do not understand '" + command + "'.")
+      SuppressTurnscripts
+    </unresolvedcommandhandler>
+    <scopebackdrop type="script">
+      foreach (o, GetAllChildObjects (everywhere)) {
+        list add (items, o)
+      }
+    </scopebackdrop>
+    <object name="everywhere">
+      <inherit name="editor_object" />
+    </object>
+  </game>
+  <object name="Court Yard">
+    <inherit name="editor_room" />
+    <isroom />
+    <listen>You can hear the rain pounding against the windows.</listen>
+    <picture type="string"></picture>
+    <description type="script"><![CDATA[
+      picture ("Courtyard.png")
+      msg ("High crumbling walls encircle the small courtyard, effectively casting most of it in shadow. A few thorny roses bloom in some long-overgrown gardens and an old fountain stands crumbling in the center. The bush you woke up in is still quite flattened. A statue of an angel stands proudly, if not crumbly, in the corner.")
+      if (FintonnisMilfornham.parent = Court Yard) {
+        msg ("A slumbering dragon opposite the angel statue, clutching an amulet.")
+      }
+      msg ("There is a large door to the <b> <i>north </i></b>leading into the castle. It appears to be cracked open and your small stature might allow you to wiggle inside without much effort.")
+    ]]></description>
+    <beforefirstenter type="script">
+      msg ("You awake with a throbbing headache, sprawled out in a mangled bush with lots of pokey branches and leaves stabbing into your aching body. You have absolutely no clue how you got there. Last you remember you had been gathering some ingredients for some potions with your master, but he doesn’t seem to be anywhere nearby either.")
+      wait {
+      }
+    </beforefirstenter>
+    <enter type="script">
+      msg ("")
+    </enter>
+    <firstenter type="script">
+    </firstenter>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <onFire type="boolean">false</onFire>
+      <feature_lightdark />
+      <lightsource />
+      <lightstrength>weak</lightstrength>
+    </object>
+    <object name="Bushes">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <look>Luckily for you, this bush seems to have broken what would've been a nasty fall. Unlucky for the bush, you seem to have flattened most of it.</look>
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <scenery />
+      <feature_container />
+      <open type="boolean">false</open>
+      <close type="boolean">false</close>
+      <hidechildren />
+      <listchildren />
+      <listchildrenprefix><![CDATA[Something glitters at you from beneath the leaf litter surrounding the mangled bush you'd fallen in, It's a small silver <b><i>amulet</i></b>!]]></listchildrenprefix>
+      <transparent type="boolean">false</transparent>
+      <alt type="stringlist">
+        <value>flattened bush</value>
+        <value>bush</value>
+      </alt>
+      <object name="Protection Amulet">
+        <inherit name="editor_object" />
+        <inherit name="wearable" />
+        <visible />
+        <look>Amulet you dropped when you were kidnapped.</look>
+        <take />
+        <takemsg>It's the one your master had given you some years ago for your birthday after you'd gotten into a bit of a scrape with a few angry roosters. It offers a minor protection spell, which is probably why you were unharmed after your fall. And probably why your master gave it to you in the first place</takemsg>
+        <feature_wearable />
+        <alt type="stringlist">
+          <value>amulet</value>
+          <value>necklace</value>
+          <value>treasure</value>
+        </alt>
+      </object>
+    </object>
+    <exit alias="north" to="Main Hall">
+      <inherit name="northdirection" />
+      <scenery />
+    </exit>
+    <object name="Fountain">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <look><![CDATA[It looks as though it may have been beautiful once, but the ornate engravings around the edge have long since faded away and the statue in the center is broken. The water is murky and green, and it smells sour. A few coins glimmer beneath the foul water.<br/>]]></look>
+      <take type="boolean">false</take>
+      <feature_container />
+      <open type="boolean">false</open>
+      <close type="boolean">false</close>
+      <hidechildren />
+      <listchildren type="boolean">false</listchildren>
+      <scenery />
+      <alt type="stringlist">
+        <value>center fountain</value>
+      </alt>
+      <object name="Coins">
+        <inherit name="editor_object" />
+        <inherit name="plural" />
+        <alias>few coins</alias>
+        <take />
+        <alt type="stringlist">
+          <value>gold</value>
+          <value>object</value>
+        </alt>
+        <look>Three small golden coins, about a weeks' wages in the blacksmith back home.</look>
+      </object>
+      <object name="Engraving">
+        <inherit name="editor_object" />
+        <visible type="boolean">false</visible>
+        <look type="script">
+          msg ("Carefully carved into a metal plate reads: ")
+          SetWebFontName ("Allura")
+          SetFontSize (30)
+          msg ("Uisge")
+          SetWebFontName ("Kavivanar")
+          SetFontSize (12)
+        </look>
+        <read type="script">
+          do (this, "look")
+        </read>
+      </object>
+      <object name="water">
+        <inherit name="editor_object" />
+        <scenery />
+        <alt type="stringlist">
+          <value>murky water</value>
+          <value>liquid</value>
+        </alt>
+        <drink>You take a sip but immediately vomit. Gross.</drink>
+      </object>
+    </object>
+    <object name="Roses">
+      <inherit name="editor_object" />
+      <inherit name="plural" />
+      <alt type="stringlist">
+        <value>roses</value>
+        <value>rose bush</value>
+      </alt>
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix>some</prefix>
+      <takemsg>You consider taking a flower but quickly think better of it once you notice the wickedly sharp thorns along the stems. Most are as long as your hand!</takemsg>
+      <scenery />
+      <look type="script">
+        msg ("A cluster of roses. They’re wild and overgrown, but a few blood red roses still bloom.")
+      </look>
+    </object>
+    <object name="Statue">
+      <inherit name="editor_object" />
+      <scenery />
+      <look type="script">
+        msg ("It looks like it might have been an angel at one point, but it is too broken and weathered to tell.")
+      </look>
+      <alt type="stringlist">
+        <value>angel</value>
+      </alt>
+    </object>
+    <exit name="Alternate Ending" alias="south" to="Nowhere">
+      <inherit name="southdirection" />
+      <locked />
+      <lockmessage>An old, rusted gate that appears to lead outside the gated courtyard you’ve found yourself in. It is covered in vines and looks as though it hasn’t been opened in years.</lockmessage>
+      <scenery />
+      <runscript />
+      <script type="script"><![CDATA[
+        msg ("You leave the courtyard, having not defeated the evil wizard nor freeing your master. You walk south, the sun setting to your right. You reflect on the past few hours as you walk.<br/>Maybe your master will be able to escape whatever prison is holding him. <br/>Maybe someone braver than you will be able to stop that evil wizard. <br/>Maybe you'll be able to forget your failure.<br/>Maybe.")
+        SetWebFontName ("Style Script")
+        SetFontSize (16)
+        msg ("The End.")
+        finish
+      ]]></script>
+    </exit>
+  </object>
+  <command name="HangOnHook">
+    <pattern>hang up #object#;hang #object#</pattern>
+    <script>
+      if (not object.parent = player) {
+        msg ("You aren't carrying " + object.article + ".")
+      }
+      else if (not player.parent = cloakroom) {
+        msg ("Hang " + object.article + " where, exactly?")
+      }
+      else {
+        if (object = plant) {
+          object.parent = floor
+          msg ("The plant falls on the ground, shattering the pot")
+        }
+        else {
+          object.parent = hook
+          msg ("You hang the " + GetDisplayAlias(object) + " on the hook.")
+        }
+      }
+    </script>
+  </command>
+  <command name="HangOn">
+    <pattern>hang #object1# on #object2#</pattern>
+    <script>
+      if (not object1.parent = player) {
+        msg ("You aren't carry it " + object.article + ".")
+      }
+      else if (not object2 = hook) {
+        msg ("You can't hang stuff on " + GetDisplayName(object2) + ".")
+      }
+      else {
+        object1.parent = object2
+        msg ("You hang the " + GetDisplayAlias(object1) + " on the " + GetDisplayAlias(object2) + ".")
+      }
+    </script>
+  </command>
+  <command name="About">
+    <pattern>about</pattern>
+    <script>
+      msg ("This game was created by The Pixie, following the Cloak of Darkness specification by Roger Firth. Thats to KV for beta-testing.")
+      SuppressTurnscripts
+    </script>
+  </command>
+  <command name="Listen">
+    <pattern>listen</pattern>
+    <script>
+      if (HasString(player.parent, "listen")) {
+        msg (player.parent.listen)
+      }
+      else {
+        msg ("It is quiet as the grave...")
+      }
+      player.suppress_background_sounds = true
+    </script>
+  </command>
+  <command name="Smell">
+    <pattern>smell;sniff</pattern>
+    <script>
+      switch (player.parent) {
+        case (foyer) {
+          msg ("It smells of damp and neglect in here.")
+        }
+        case (bar) {
+          msg ("There is a musty smell, but behind that, something else, something thast reminds you of the zoo, perhaps?")
+        }
+        default {
+          msg ("It smells slightly musty.")
+        }
+      }
+    </script>
+  </command>
+  <command name="Wear">
+    <pattern>put #object# on; wear #object#; put on #object#; don #object#; wear #object#</pattern>
+    <unresolved>You want to wear what?</unresolved>
+    <scope>inventory</scope>
+    <script>
+      if (not HasBoolean(object, "worn")) {
+        msg ("That's not something you can wear.")
+      }
+      else if (object.worn) {
+        msg ("You're already wearing " + object.article + ".")
+      }
+      else {
+        msg ("You put " + object.article + " on.")
+        object.parent = player
+        object.worn = true
+      }
+    </script>
+  </command>
+  <command name="Remove">
+    <pattern><![CDATA[> take #object# off; remove #object#; take off #object#; doff #object#]]></pattern>
+    <scope>inventory</scope>
+    <script>
+      if (not object.worn) {
+        msg ("You're not wearing " + object.article + ".")
+      }
+      else {
+        msg ("You take " + object.article + " off.")
+        object.worn = false
+      }
+    </script>
+  </command>
+  <command name="Inventory">
+    <pattern>^i$|^inv$|^inventory$</pattern>
+    <script>
+      carrylist = FilterByNotAttribute(ScopeInventory(), "worn", true)
+      wornlist = FilterByAttribute(ScopeInventory(), "worn", true)
+      if (ListCount(carrylist) = 0) {
+        if (ListCount(wornlist) = 0) {
+          msg ("You are not carrying anything.")
+        }
+        else {
+          msg ("You are wearing " + FormatList(wornlist, ",", "and", "nothing") + ".")
+        }
+      }
+      else {
+        s = "You are carrying " + FormatList(carrylist, ",", "and", "nothing")
+        if (ListCount(wornlist) = 0) {
+          msg (s + ".")
+        }
+        else {
+          msg (s + ", and wearing " + FormatList(wornlist, ",", "and", "nothing") + ".")
+        }
+      }
+    </script>
+  </command>
+  <object name="Main Hall">
+    <inherit name="editor_room" />
+    <description type="script"><![CDATA[
+      picture ("Hall.png")
+      msg ("There is a door to the <b><i>east</i></b> and some stairs to the <b><i>north</i></b>.")
+      if (FintonnisMilfornham.parent = Main Hall) {
+        msg ("A slumbering dragon blocks the door to the <b><i>west</i></b>.")
+      }
+      msg ("The air inside is musty and old, and smells like no one has opened a window in a long time. Kind of like your room. Bits of light filter in from broken stained-glass windows high near the ceiling of the castle, casting the room in a dim glow. On the center of the rug is a lectern with an old tome perched upon it. An old ornate rug covers the center of the room. It looks super thick and heavy.")
+      if (Ornate Rug.hasKey = true) {
+        OutputTextNoBr ("There is a small lump in one corner. ")
+      }
+      msg ("A few tattered old tapestries hang on the walls.")
+    ]]></description>
+    <exit alias="south" to="Court Yard">
+      <inherit name="southdirection" />
+    </exit>
+    <exit name="Kitchen Door" alias="west" to="Kitchen">
+      <inherit name="westdirection" />
+      <locked />
+      <lockmessage>There's a dragon in the way.</lockmessage>
+      <runscript type="boolean">false</runscript>
+    </exit>
+    <exit alias="east" to="Library">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="up" to="Balcony">
+      <inherit name="updirection" />
+      <visible type="boolean">false</visible>
+    </exit>
+    <object name="Ornate Rug">
+      <inherit name="editor_object" />
+      <scenery />
+      <alt type="stringlist">
+        <value>rug</value>
+        <value>carpet</value>
+      </alt>
+      <hasKey />
+      <look>A purple rug, with grey and white stripes lining it. It probably took years to stitch.</look>
+      <lookunder type="script">
+        OutputTextNoBr ("With a strained grunt you just barely mage to flip up the edge of the huge rug ")
+        if (Got(Skeleton Key) = false) {
+          msg ("and find a beautifully decorated key.")
+        }
+        else {
+          msg ("and find nothing but dust bunnies.")
+        }
+        MakeObjectVisible (Skeleton Key)
+      </lookunder>
+    </object>
+    <object name="lectern">
+      <inherit name="editor_object" />
+      <look>There is an ancient tome on it.</look>
+      <scenery />
+      <alt type="stringlist">
+        <value>stand</value>
+      </alt>
+    </object>
+    <object name="Skeleton Key">
+      <inherit name="editor_object" />
+      <scenery type="boolean">false</scenery>
+      <visible type="boolean">false</visible>
+      <take />
+      <look>Beautiful key made of solid bone, a 2 is carved into the side of it.</look>
+      <feature_usegive />
+      <drop />
+      <not_all />
+      <ontake type="script">
+        Ornate Rug.hasKey = false
+      </ontake>
+      <selfuseon type="scriptdictionary">
+        <item key="East Door">
+          do (East Door, "unlock")
+        </item>
+        <item key="West Door">
+          do (West Door, "unlock")
+        </item>
+      </selfuseon>
+      <alt type="stringlist">
+        <value>key</value>
+      </alt>
+    </object>
+    <object name="tome">
+      <inherit name="editor_object" />
+      <alt type="stringlist">
+        <value>book</value>
+      </alt>
+      <scenery />
+      <look type="script">
+        msg ("Only one page in the tome has been written in. It describes an ancient form of pyromancy. In intricate caligraphy it reads:")
+        SetWebFontName ("Allura")
+        SetFontSize (30)
+        msg ("Teine")
+        SetWebFontName ("Kavivanar")
+        SetFontSize (12)
+      </look>
+      <read type="script">
+        do (this, "look")
+      </read>
+    </object>
+    <object name="Tapestries">
+      <inherit name="editor_object" />
+      <scenery />
+      <look type="script">
+        msg ("Most are too old and frayed for you to make out the images once woven into them, but one large tapestry appears better preserved than the others.")
+        MakeObjectVisible (Large Tapestry)
+      </look>
+      <alt type="stringlist">
+        <value>wall</value>
+      </alt>
+    </object>
+    <exit alias="north" to="Balcony">
+      <inherit name="northdirection" />
+    </exit>
+    <turnscript name="unblockDoor">
+      <enabled />
+      <script>
+        if (FintonnisMilfornham.parent = Court Yard) {
+          UnlockExit (Kitchen Door)
+        }
+      </script>
+    </turnscript>
+    <object name="FintonnisMilfornham">
+      <inherit name="editor_object" />
+      <inherit name="surface" />
+      <inherit name="namedmale" />
+      <inherit name="MaleNpc" />
+      <scenery />
+      <attr name="feature_container" type="boolean">false</attr>
+      <alt type="stringlist" />
+      <isroom />
+      <visible />
+      <gender>he</gender>
+      <alias>Dragon</alias>
+      <yesmsg>Growls in agreement</yesmsg>
+      <actions type="stringlist" />
+      <feature_usegive />
+      <look>Large red scales cover the dragon head to tail and smoke curls from his nose. He’s not the biggest you’ve ever seen, but he could still easily eat you in one bite. You should probably be careful not to upset him.</look>
+      <npcscript type="script">
+      </npcscript>
+      <giveanything type="script">
+        msg (" “I have no interest in your worthless tokens. Return to me when you’ve found something of real value.”")
+      </giveanything>
+      <talk type="script">
+        msg ("The dragon raises his head and narrows his eyes at you, flicking his tongue sleepily. “What do you want child? It had better be important for you to have interrupted my nap.”")
+        if (Got(Coins)) {
+          msg ("He growls hungrily. \"I smell treasure.\"")
+        }
+        else if (Got(Protection Amulet)) {
+          msg ("He growls hungrily. \"I smell treasure.\"")
+        }
+      </talk>
+      <askdefault type="script">
+        msg ("“What do I look like, a magic mirror? I don’t know everything child.”")
+      </askdefault>
+      <fight type="script">
+        msg ("You strike the dragon with your fists. He briefly awakes from his nap to eat you before curling up again.")
+        SetWebFontName ("Style Script")
+        SetFontSize (16)
+        msg ("The End.")
+        finish
+      </fight>
+      <give type="scriptdictionary">
+        <item key="Protection Amulet">
+          MoveDragon
+          Protection Amulet.parent = FintonnisMilfornham
+        </item>
+        <item key="Coins">
+          msg ("“I have many of the same in my horde already, but I suppose I can take them off your hands.” The dragon takes the coins from you, lazily puffing smoke. “A word of advice for you young one, do not engage the wizard unprepared. Think like a dragon: every treasure has a use, hold onto them until you find it.”")
+          Coins.parent = FintonnisMilfornham
+        </item>
+        <item key="Magic Ring">
+          msg ("The dragon sniffs curiously at the ring, before turning his head away in disinterest. “Beautiful as it is, there is nothing this magic ring can do for me that I cannot already do myself. You should keep it.”")
+          Magic Ring.parent = FintonnisMilfornham
+        </item>
+        <item key="Gold"><![CDATA[
+          msg ("\"Ah! Alchemical Gold, this is very rare indeed. In exchange I shall give you my name: <br/>Fintonnis Milfornham.\"")
+        ]]></item>
+      </give>
+      <ask type="scriptdictionary">
+        <item key="Evil Wizard">
+          msg ("The dragon curls his tail across the floor. “Sometimes I’ll do favors for him if he gives me gold or magical items, but I have no particular love for him. We tolerate each other is all.”")
+        </item>
+        <item key="Master">
+          msg ("“All you humans look the same to me. Even if I cared, I couldn’t tell you if I saw him or not.” He drums his claws on the stone floor, clearly growing impatient.")
+        </item>
+        <item key="Castle">
+          msg ("The dragon stretches his wings, stirring up a cloud of dust that sends you into a sneezing fit. “I’ve lived here far longer than the wizard, but I don’t know much about the castle itself. A place as old as this is bound to be full of secrets, though I never bothered to find any out myself.”")
+        </item>
+        <item key="Name">
+          msg ("\"Names have power young one, I wouldn't give it to you without reason. Or a very powerful treasure.\"")
+        </item>
+      </ask>
+    </object>
+    <object name="Large Tapestry">
+      <inherit name="editor_object" />
+      <look>A beautiful portrait of a wizard takes up the majority of the tapestry. One of his hands is on fire and light seems to be radiating from it as he holds his flaming hand aloft. He looks very impressive, but not as cool as your master.</look>
+      <scenery />
+      <visible type="boolean">false</visible>
+    </object>
+    <object name="Dust Bunnies">
+      <inherit name="editor_object" />
+      <take />
+      <takemsg>You pick up the dust bunnies, your pockets are now filled with dust.</takemsg>
+      <not_all />
+      <visible />
+      <scenery />
+      <look>Dust in the shape of bunnies somehow. Magic, probably.</look>
+      <drop type="boolean">false</drop>
+    </object>
+  </object>
+  <object name="Alchemy Lab">
+    <inherit name="editor_room" />
+    <description type="script">
+      picture ("Alchemy .png")
+      msg ("For most poeple it would be a closet, but to you it seems like a fairly large room. Large windows line the walls and several tables full of glass bottles. They're all empty except for one filled with red liquid and one filled with yellow. Alchemy equipment fills the rest of the room and a few bookshelves line the back wall. One of the tables holds a rather ornate brewing stand.")
+    </description>
+    <object name="Awkward Potion">
+      <inherit name="editor_object" />
+      <alias>Red Bottle</alias>
+      <take />
+      <alt type="stringlist">
+        <value>red</value>
+        <value>first bottle</value>
+        <value>bottle</value>
+      </alt>
+      <scenery />
+      <look>A small bottle filled halfway with a light red liquid.</look>
+      <drink>You swirl the red potion around and the thickness of it reminds you of blood. Eugh. You've lost your appetite.</drink>
+    </object>
+    <object name="Awkward Potion1">
+      <inherit name="editor_object" />
+      <inherit name="edible" />
+      <alias>Yellow Bottle</alias>
+      <take />
+      <alt type="stringlist">
+        <value>yellow</value>
+        <value>second bottle</value>
+        <value>bottle</value>
+      </alt>
+      <scenery />
+      <look>A small bottle filled with a yellow, almost golden, liquid.</look>
+      <feature_edible />
+      <drink type="script">
+        msg ("Bottoms up! You take a quick swig and before you know it. You're left with a metallic taste in your mouth, as if there's a coin there")
+        do {this, eat}
+      </drink>
+    </object>
+    <object name="Brewing Stand">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <attr name="feature_usegive" type="boolean">false</attr>
+      <feature_container />
+      <close type="boolean">false</close>
+      <open type="boolean">false</open>
+      <isopen />
+      <drop type="boolean">false</drop>
+      <listchildren />
+      <listchildrenprefix>Sitting on it</listchildrenprefix>
+      <not_all />
+      <scenery />
+      <look>An ornate brewing stand, enough room to fit a couple bottles and another ingredient. You wonder if the library downstairs has any books about potions.</look>
+      <ondrop type="script">
+      </ondrop>
+      <add type="script">
+        do (this, "put")
+      </add>
+      <alt type="stringlist">
+        <value>stand</value>
+      </alt>
+    </object>
+    <turnscript name="MakePotion">
+      <enabled />
+      <script>
+        if (Contains(Brewing Stand, Definitely Not Weed) and Contains (Brewing Stand, Pickle Juice) and Contains (Brewing Stand, Awkward Potion)) {
+          msg ("{once:You made a potion.}")
+          RemoveObject (Definitely Not Weed)
+          RemoveObject (Pickle Juice)
+          RemoveObject (Awkward Potion)
+          MakeObjectVisible (Acid Potion)
+        }
+        else if (Contains(Brewing Stand, Bread) and Contains (Brewing Stand, Fancy Salt) and Contains (Brewing Stand, Awkward Potion1)) {
+          msg ("A bar of gold appears in front of you.")
+          RemoveObject (Bread)
+          RemoveObject (Fancy Salt)
+          RemoveObject (Awkward Potion1)
+          MakeObjectVisible (Gold)
+        }
+      </script>
+    </turnscript>
+    <exit alias="west" to="Balcony">
+      <inherit name="westdirection" />
+    </exit>
+    <object name="Acid Potion">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <take />
+      <alt type="stringlist">
+        <value>potion</value>
+        <value>acid</value>
+        <value>bottle</value>
+      </alt>
+      <feature_usegive />
+      <look>Steam billows from the top of the bottle and the thick liquid bubbles a bit. The glass is quite warm to the touch and a strong smell of burnt pickles wafts from it. </look>
+      <drink>As you bring the bottle up to your mouth, the steam trickles up your nose and begins to burn. What little common sense you've developed tells you that drinking this wouldn't be very healthy.</drink>
+      <selfuseon type="scriptdictionary">
+        <item key="Iron Bars">
+          Iron Bars.open = True
+          msg ("The acidic potion melts through the iron bars.")
+        </item>
+      </selfuseon>
+    </object>
+    <object name="Gold">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <look>Solid gold. Creating this has been the sole goal of alchemists for centuries. Apparently it was just about raisin bread, salt, and whatever was in that yellow vial.</look>
+      <alt type="stringlist">
+        <value>bar</value>
+      </alt>
+    </object>
+    <object name="Empty Bottles">
+      <inherit name="editor_object" />
+      <alt type="stringlist">
+        <value>bottles</value>
+      </alt>
+      <look><![CDATA[{once:You try and pick one up but it falls and shatters. Probably shouldn't try that again. Then again, there are a lot of bottles.}<br/>{random:smash; crash; bam; clang; clatter; crinkle; crack; crunch}!]]></look>
+    </object>
+  </object>
+  <object name="Library">
+    <inherit name="editor_room" />
+    <dark />
+    <darkroomdescription>It is too dark to make out much of anything and you really don’t think you should go in without a light source. Who knows what you’d run in to!</darkroomdescription>
+    <description type="script">
+      picture ("Library.png")
+      msg ("Large shelves full of dusty old tomes line the walls, some with gilded lettering that shimmers in the fiery glow of your hand. A few plush chairs are nestled in a corner and a small table stands nearby. The dust in the room makes you sneeze.")
+    </description>
+    <exit alias="west" to="Main Hall">
+      <inherit name="westdirection" />
+      <lightsource />
+      <lightstrength>weak</lightstrength>
+    </exit>
+    <exit name="Dungeon Enterance" alias="in" to="Dungeon">
+      <inherit name="indirection" />
+      <visible />
+      <scenery />
+      <locked />
+      <lockmessage>You can't go there.</lockmessage>
+    </exit>
+    <object name="Bookshelf">
+      <inherit name="editor_object" />
+      <inherit name="surface" />
+      <feature_container />
+      <hidechildren />
+      <listchildren />
+      <listchildrenprefix>It has quite a few books, including</listchildrenprefix>
+      <scenery />
+      <alt type="stringlist">
+        <value>shelf</value>
+        <value>bookshelves</value>
+        <value>shelves</value>
+      </alt>
+      <look> </look>
+      <object name="Acid Book">
+        <inherit name="editor_object" />
+        <alias>Neutralizing Strong Bases</alias>
+        <usedefaultprefix type="boolean">false</usedefaultprefix>
+        <alt type="stringlist">
+          <value>Neutralizing</value>
+          <value>Bases</value>
+          <value>Second Book</value>
+          <value>Two</value>
+        </alt>
+        <take />
+        <look><![CDATA[A magical concoction am I,<br/>Created with precision and devotion,<br/>Green juice and blue herbs are my key,<br/>And a red base is what brings me to be.<br/><br/>Mixed together I’m a vibrant hue,<br/>But don’t be fooled by my colorful view,<br/>For when released, I’ll work my magic well,<br/>Disintegrating anything in the way of where I dwell.<br/>]]></look>
+        <read type="script">
+          do (this, "look")
+        </read>
+        <visible />
+      </object>
+      <object name="Book Series Part Three">
+        <inherit name="editor_object" />
+        <usedefaultprefix type="boolean">false</usedefaultprefix>
+        <alt type="stringlist">
+          <value>Book Series</value>
+          <value>Part Three</value>
+          <value>Book Series Three</value>
+          <value>Three</value>
+          <value>Third book</value>
+        </alt>
+        <take />
+        <read type="script">
+          do (this, "look")
+        </read>
+        <look>It's long and boring, you wonder how they managed to make three of these. </look>
+        <visible />
+      </object>
+      <object name="Dungeon Book">
+        <inherit name="editor_object" />
+        <take />
+        <alt type="stringlist">
+          <value>First Book</value>
+          <value>Secret Passages</value>
+          <value>Dummies</value>
+          <value>Secret</value>
+          <value>One</value>
+        </alt>
+        <alias>Secret Passages for Dummies</alias>
+        <usedefaultprefix type="boolean">false</usedefaultprefix>
+        <ontake type="script">
+          do (this, "look")
+        </ontake>
+        <look type="script"><![CDATA[
+          MakeObjectVisible (Dungeon)
+          UnlockExit (Dungeon Enterance)
+          msg ("The bookshelf next to you shudders and then slides back into the wall.<br/>You can go <b><i>in</i></b>.")
+        ]]></look>
+        <read type="script">
+          do (this, "look")
+        </read>
+        <visible type="boolean">false</visible>
+      </object>
+    </object>
+  </object>
+  <object name="Dungeon">
+    <inherit name="editor_room" />
+    <dark type="boolean">false</dark>
+    <objectslistprefix>There's</objectslistprefix>
+    <description type="script">
+      picture ("Dungeon.png")
+      msg ("The steady drip of water echoes through the damp hallway, the smell of mold and rot permeating the air. A few rats squeak to each other, disturbed by your presence as they scurry along the cold stone floor. You can make out three locked cells with rusty metal bars, and a fourth that looks like it had been smashed open long ago.")
+    </description>
+    <exit alias="out" to="Library">
+      <inherit name="outdirection" />
+    </exit>
+    <object name="North Cell">
+      <inherit name="editor_object" />
+      <inherit name="container_closed" />
+      <feature_container />
+      <transparent />
+      <hidechildren />
+      <listchildren type="boolean">false</listchildren>
+      <close type="boolean">false</close>
+      <open type="boolean">false</open>
+      <look>It's your master! His robe looks a little frayed but his beard is just as poofy as the last time you saw him so he's probably fine.</look>
+      <alt type="stringlist">
+        <value>north</value>
+      </alt>
+      <contentsprefix>inside is your</contentsprefix>
+      <isopen type="boolean">false</isopen>
+      <object name="Master">
+        <inherit name="editor_object" />
+        <inherit name="MaleNpc" />
+        <alias>Master</alias>
+        <look><![CDATA[It's your master! His robe looks a little frayed but his beard is just as poofy as the last time you saw him so he's probably fine. You have so many questions to <b><i>ask </i></b>him]]></look>
+        <feature_container />
+        <transparent type="boolean">false</transparent>
+        <listchildren type="boolean">false</listchildren>
+        <talk><![CDATA["My dear boy, I was worried I would never see you again. You must have so many questions to <b><i>ask</i></b>!]]></talk>
+        <askdefault type="script">
+          msg ("\"Some big wizard hit me with his wizard stick and put me in this cell. Beyond that, I don't know what's going on.\"")
+          if (not Got(Magic Ring)) {
+            msg ("\"Oh I almost forgot, I have a gift for you.\"")
+            msg ("He hands you a small ring. Into the hand that is not on fire of course.")
+            AddToInventory (Magic Ring)
+          }
+        </askdefault>
+        <telldefault type="script">
+          msg ("I'm... uh... proud of you. You got this.")
+        </telldefault>
+        <telltodefault type="script">
+          msg ("I'd love to but I'm uh... you know, kinda stuck in a cage. That wizard fellow probably has some keys.")
+        </telltodefault>
+        <npcscript type="script">
+          if
+        </npcscript>
+        <alt type="stringlist">
+          <value>wizard</value>
+        </alt>
+        <object name="Magic Ring">
+          <inherit name="editor_object" />
+          <look>A beautiful cast-iron ring with a bright red gem in the center. As you twist it between your fingers, the gem shifts from yellow to orange then back to red.</look>
+          <alt type="stringlist">
+            <value>ring</value>
+          </alt>
+        </object>
+      </object>
+    </object>
+    <object name="East Cell">
+      <inherit name="editor_object" />
+      <inherit name="container_closed" />
+      <feature_container />
+      <hidechildren />
+      <listchildren type="boolean">false</listchildren>
+      <transparent />
+      <close type="boolean">false</close>
+      <open type="boolean">false</open>
+      <look>Some young wizard sits inside the cell, he looks annoying.</look>
+      <alt type="stringlist">
+        <value>east</value>
+      </alt>
+      <isopen type="boolean">false</isopen>
+      <object name="Not Master">
+        <inherit name="editor_object" />
+        <inherit name="FemaleNpc" />
+        <alias>Young Wizard</alias>
+        <look>Looking at him up close you can tell for sure that he's annoying. If you try to talk to him, he'll probably just complain.</look>
+        <talk>"My only hope is a child? I'm doomed." It turns out he's annoying AND snotty.</talk>
+        <askdefault type="script">
+          msg ("He ignores you and complains about how small his cell is.")
+        </askdefault>
+        <telldefault type="script">
+          msg ("\"Are you sure you're gonna be able to save us? You can't even turn your firehand off.\"")
+        </telldefault>
+        <telltodefault type="script">
+          msg ("\"I can't really do much. You know? I'm kinda locked in a cell.\"")
+        </telltodefault>
+        <alt type="stringlist">
+          <value>wizard</value>
+        </alt>
+      </object>
+    </object>
+    <object name="West Cell">
+      <inherit name="editor_object" />
+      <inherit name="container_closed" />
+      <feature_container />
+      <close type="boolean">false</close>
+      <open type="boolean">false</open>
+      <transparent />
+      <listchildren type="boolean">false</listchildren>
+      <contentsprefix>inside is</contentsprefix>
+      <look>A blue-robed wizard lies sleeping on the floor of the cell.</look>
+      <alt type="stringlist">
+        <value>west</value>
+      </alt>
+      <hidechildren />
+      <object name="Narcoleptic">
+        <inherit name="editor_object" />
+        <inherit name="FemaleNpc" />
+        <take type="boolean">false</take>
+        <alias>Sleeping Wizard</alias>
+        <look>Yup. That's a sleeping wizard. </look>
+        <talk>He refuses to wake up for the likes of you.</talk>
+        <askdefault type="script">
+          msg ("He refuses to wake up for the likes of you.")
+        </askdefault>
+        <telldefault type="script">
+          msg ("He refuses to wake up for the likes of you.")
+        </telldefault>
+        <telltodefault type="script">
+          msg ("He refuses to wake up for the likes of you.")
+        </telltodefault>
+        <alt type="stringlist">
+          <value>wizard</value>
+        </alt>
+      </object>
+    </object>
+  </object>
+  <object name="Wizard Tower">
+    <inherit name="editor_room" />
+    <turns type="int">0</turns>
+    <description type="script">
+      picture ("Wizard Room.png")
+      msg ("The room is not quite what you expected for an evil wizard's lair. Not that you’ve seen many evil lairs of course so you’re not entirely sure what you were expecting, but you’re certain it wasn’t this. The room is decorated with magical instruments of all kind hanging from the walls and strewn about a small desk alongside a loaf of fresh bread. Most are rather sharp. There’s a soft couch made from some kind of dark leather against one wall and some toy stuffed animals sit on its cushions. At least...you think that’s what they are. Something unsettling about them leads you to believe they might actually be literal stuffed animals. Sprawled out on a rather extravagant bed is a man in a pitch-black robe taking a nap. His robe seems to draw in light from around it. The fire from your hand snuffs out.")
+      player.onFire = False
+      SetObjectLightstrength (player, "weak")
+    </description>
+    <exit name="Exit" alias="east" to="Balcony">
+      <inherit name="eastdirection" />
+      <locked type="boolean">false</locked>
+    </exit>
+    <object name="Big Wizard">
+      <inherit name="editor_object" />
+      <inherit name="MaleNpc" />
+      <alive />
+      <scenery />
+      <look>He look rather like Tony Hawk, the hunter. </look>
+      <askdefault type="script">
+        msg ("")
+      </askdefault>
+    </object>
+    <turnscript name="turnCounter">
+      <enabled />
+      <script><![CDATA[
+        Wizard Tower.turns = Wizard Tower.turns + 1
+        if (Wizard Tower.turns = 2) {
+          msg ("The wizard wakes up with a jump and turns to face you.<br/>\"Oh its just a child. How did you get here?\"")
+        }
+        if (Wizard Tower.turns = 3) {
+          msg ("\"Wait a minute, you're not just a child. You're a little wizard aren't you?\"<br/>He walks across the room to get his staff.")
+        }
+        if (Wizard Tower.turns = 4) {
+          msg ("He lifts his staff up to cast a spell but stumbles over his words. You feel as if you have little time left.")
+        }
+        if (Wizard Tower.turns = 5) {
+          msg ("You can't tell if he said spreadhadh or just sneezed but either way his staff shoots a burst of light at you.<br/>Unfortunately, you died.")
+          SetWebFontName ("Stylish")
+          msg ("The End.")
+          finish
+        }
+      ]]></script>
+    </turnscript>
+    <object name="Bread">
+      <inherit name="editor_object" />
+      <inherit name="edible" />
+      <take />
+      <alias>Freshly Baked Bread</alias>
+      <alt type="stringlist">
+        <value>loaf</value>
+      </alt>
+      <look>It has raisins in it. Maybe this wizard really is evil. </look>
+      <scenery />
+      <feature_edible />
+      <eatmsg>You manage to stomach the revolting raisin bread. Why would someone make such a thing?</eatmsg>
+    </object>
+  </object>
+  <object name="Balcony">
+    <inherit name="editor_room" />
+    <description><![CDATA[The balcony splits off in two directions. The door to the <b><i>east </i></b>has an engraving of a bottle at the top of the door frame. The door to the <b><i>west </i></b>is blocked by iron bars.]]></description>
+    <exit alias="south" to="Main Hall">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="down" to="Main Hall">
+      <inherit name="downdirection" />
+      <visible type="boolean">false</visible>
+    </exit>
+    <exit name="Wizard Door" alias="west" to="Wizard Tower">
+      <inherit name="westdirection" />
+      <locked />
+    </exit>
+    <exit name="Alchemy Door" alias="east" to="Alchemy Lab">
+      <inherit name="eastdirection" />
+      <locked />
+    </exit>
+    <object name="East Door">
+      <inherit name="editor_object" />
+      <scenery />
+      <look>A sturdy wooden door. There's an engraving of a bottle above it.</look>
+      <unlock type="script">
+        if (Got(Skeleton Key)) {
+          msg ("The key slides in easily to the keyhole. You turn in and with a click, the door swings open.")
+          UnlockExit (Alchemy Door)
+        }
+        else {
+          msg ("I don't think you have the facilities for that, big man.")
+        }
+      </unlock>
+      <alt type="stringlist">
+        <value>e</value>
+      </alt>
+    </object>
+    <object name="Iron Bars">
+      <inherit name="editor_object" />
+      <inherit name="container_closed" />
+      <feature_container />
+      <close type="boolean">false</close>
+      <open type="boolean">false</open>
+      <transparent />
+      <contentsprefix>behind which is </contentsprefix>
+      <scenery />
+      <isopen />
+      <look>The iron bars aren't super sturdy, but your noodly arms can't pull them apart.</look>
+      <object name="West Door">
+        <inherit name="editor_object" />
+        <inherit name="container_closed" />
+        <unlocked type="boolean">false</unlocked>
+        <look>Iron bars block you from getting too close to the door, but you can make out a keyhole in the old brass nob. The area near the door also feels rather chilly and your breath billows in little puffy clouds.</look>
+        <feature_container />
+        <close type="boolean">false</close>
+        <open />
+        <isopen type="boolean">false</isopen>
+        <openmsg> </openmsg>
+        <closemsg> </closemsg>
+        <unlock type="script">
+          if (Got(Skeleton Key)) {
+            if (Iron Bars.open) {
+              msg ("To your surprise the key fits inside this door too. The lock clicks open but the door remnains closed.")
+              UnlockExit (Wizard Door)
+              West Door.unlocked = True
+            }
+            else {
+              msg ("You have little arms and can't quite reach it through the iron bars.")
+            }
+          }
+          else {
+            msg ("I don't think you have the facilities for that, big man.")
+          }
+        </unlock>
+        <onopen type="script">
+          HandleSingleCommand ("open west")
+        </onopen>
+        <alt type="stringlist">
+          <value>w</value>
+        </alt>
+      </object>
+    </object>
+    <object name="Engraving1">
+      <inherit name="editor_object" />
+      <alias>Engraving</alias>
+      <look>It's a carving of a potion bottle. Some words were written underneath but they've since been worn away.</look>
+      <scenery />
+      <alt type="stringlist">
+        <value>door frame</value>
+      </alt>
+    </object>
+    <command>
+      <pattern>face fate</pattern>
+      <script>
+        msg ("You take a deep breath and walk into the wizard's lair.")
+        MoveObject (player, Wizard Tower)
+      </script>
+    </command>
+    <command>
+      <pattern>turn around</pattern>
+      <script>
+        msg ("You turn around and run down the stairs, back into the main hall.")
+        MoveObject (player, Main Hall)
+      </script>
+    </command>
+  </object>
+  <turnscript>
+    <enabled type="boolean">false</enabled>
+    <script>
+      player.suppress_background_sounds = false
+    </script>
+  </turnscript>
+  <object name="Kitchen">
+    <inherit name="editor_room" />
+    <description type="script">
+      picture ("Kitchen.png")
+      msg ("The smell of rosemary and sage greets you as you walk in. Although it has clearly been unused for some time, the kitchen still feels rather homey and inviting. Light filters in through dusty windows, illuminating a table with dirty dishes and various cooking items scattered across it. ")
+    </description>
+    <exit alias="east" to="Main Hall">
+      <inherit name="eastdirection" />
+    </exit>
+    <object name="Counter">
+      <inherit name="editor_object" />
+      <inherit name="surface" />
+      <feature_container />
+      <listchildren />
+      <hidechildren />
+      <listchildrenprefix>on top of which</listchildrenprefix>
+      <not_all />
+      <scenery />
+      <look>Some dried herbs sit near a pot of salt, and a strange green bottle reflects some of the sunlight filtering in across the table.</look>
+      <alt type="stringlist">
+        <value>table</value>
+      </alt>
+      <object name="Fancy Salt">
+        <inherit name="editor_object" />
+        <inherit name="edible" />
+        <alias>jar of pink powder</alias>
+        <take />
+        <feature_edible />
+        <alt type="stringlist">
+          <value>Pink</value>
+          <value>Salt</value>
+          <value>Powder</value>
+          <value>jar</value>
+        </alt>
+        <look>It’s pink!</look>
+        <eatmsg>It's so salty</eatmsg>
+      </object>
+      <object name="Pickle Juice">
+        <inherit name="editor_object" />
+        <alias>Green Bottle</alias>
+        <feature_edible />
+        <eathealth type="int">0</eathealth>
+        <take />
+        <alt type="stringlist">
+          <value>Green</value>
+          <value>Bottle</value>
+        </alt>
+        <look>You’re not entirely sure what it is, but it smells like pickles. The outside of the bottle is a bit sticky. Gross…</look>
+      </object>
+      <object name="Definitely Not Weed">
+        <inherit name="editor_object" />
+        <alias>bundle of herbs</alias>
+        <take />
+        <feature_edible />
+        <look>They smell like the kind you might use to make soup, with pretty blue veins running up and down the leaves.</look>
+        <alt type="stringlist">
+          <value>bundle</value>
+          <value>herbs</value>
+        </alt>
+      </object>
+    </object>
+  </object>
+  <object name="Nowhere">
+    <inherit name="editor_room" />
+  </object>
+  <verb>
+    <property>lookunder</property>
+    <pattern>look under; pull up; move; lift</pattern>
+    <defaultexpression>"You can't look under; pull up; move; lift " + object.article + "."</defaultexpression>
+  </verb>
+  <command name="Teine">
+    <pattern> cast teine on gate; cast teine on hand; cast teine on wizard; cast teine; say teine</pattern>
+    <unresolved type="string"></unresolved>
+    <script><![CDATA[
+      msg ("Your hand erupts in flames. But not like in a painful way.")
+      player.onFire = True
+      SetObjectLightstrength (player, "strong")
+      if (player.parent = Library) {
+        ShowRoomDescription
+      }
+      else if (Got(Magic Ring)) {
+        if (player.parent = Wizard Tower) {
+          msg ("A surge of power rushes through you as you cast the spell, and a huge blast of fire shoots forth from your hand. The power of the blast sends you stumbling back in shock. The evil wizard shrieks in surprise and black smoke fills the room as the blast connects with him, incinerating him on the spot. You cough, eyes watering from the stinging smoke. Upon investigating the pile of ash that was once the evil wizard you find a set of blackened iron keys made of the same metal as your master's cell. You waste no time grabbing the still warm keys and running down to the dungeon to free your master and the other wizards. They all seem rather shocked to see you again and even more surprised to hear you defeated the evil wizard who had captured them, but they congratulate you nonetheless and as you all leave the castle your master promises to bake you some pie later to celebrate your victory. You beam, a new spring in your step as you head home. After all, you really like pie.")
+          SetWebFontName ("Style Script")
+          SetFontSize (16)
+          msg ("The End.")
+          finish
+        }
+        else if (player.parent = Court Yard) {
+          msg ("Empowered by your master's ring, a fireball erupts out of your hand and crashes against the gate to the <b><i>south</i>,</b>, clearing the door and debris.")
+          UnlockExit (Alternate Ending)
+        }
+      }
+    ]]></script>
+  </command>
+  <verb>
+    <property>add</property>
+    <pattern>add #object# to brewing stand</pattern>
+    <defaultexpression>"You can't add " + object.article + "."</defaultexpression>
+  </verb>
+  <command>
+    <pattern>open west; open west door</pattern>
+    <scope>Balcony</scope>
+    <script><![CDATA[
+      if (Iron Bars.open) {
+        if (West Door.unlocked) {
+          if (player.onFire) {
+            msg ("The door swings open with a creak. You are faced with a choice: <b><i>face fate</i></b> or <b><i>turn around</i></b>.")
+            UnlockExit (Wizard Door)
+          }
+          else {
+            msg ("The door handle is so cold, it hurts to touch it.")
+            HelperCloseObject (West Door)
+          }
+        }
+        else {
+          msg ("The door is still locked.")
+          HelperCloseObject (West Door)
+        }
+      }
+      else {
+        msg ("There are iron bars in the way!")
+        HelperCloseObject (West Door)
+      }
+    ]]></script>
+  </command>
+  <verb>
+    <pattern>talk to #object#; speak to #object#</pattern>
+    <separator>with; using</separator>
+    <defaultexpression>"The " + object.alias + " must be a really good listener because " + object.article + " doesn't speak back."</defaultexpression>
+    <property>talk</property>
+  </verb>
+  <verb>
+    <property>fight</property>
+    <pattern>fight, slap, hit, stab, strike, kick, punch, kill, attack</pattern>
+    <defaultexpression>"You try to fight; slap; hit; stab; strike; kick; punch; kill; attack " + object.article + ", but " + object.alias + "is much stronger than you."</defaultexpression>
+  </verb>
+  <verb>
+    <pattern>drink #object#</pattern>
+    <defaulttext>How would you even go about doing that?</defaulttext>
+  </verb>
+  <function name="MoveDragon">
+    msg ("The dragon sniffs curiously at the trinket before using a claw to hook it out of your outstretched hand. “Hmm, not the most impressive amulet I’ve ever seen, but I suppose it will do.” He stands, stretching his wings and yawning loudly. “Now if you’ll excuse me, I think I’ll move my nap to a more secluded area where nosy little apprentices like yourself won’t bother me anymore.” He lumbers south towards the courtyard.\"")
+    MoveObject (FintonnisMilfornham, Court Yard)
+  </function>
+  <walkthrough name="test">
+    <steps type="simplestringlist">
+      l
+      west
+      west
+      i
+      x hook
+      put cloak on hook
+      east
+      south
+      x message
+    </steps>
+  </walkthrough>
+</asl>
